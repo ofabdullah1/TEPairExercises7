@@ -76,7 +76,7 @@ ID          From/To                 Amount
 23          From: Bernice          $ 903.14
 79          To:    Larry           $  12.55
 ---------
-Please enter transfer ID to view details (0 to cancel): "
+Please enter transfer ID to view details (0 to cancel): 
 ```
 
 ### Use case 6: Transfer details
@@ -114,7 +114,7 @@ ID          To                     Amount
 88          Bernice                $ 142.56
 147         Larry                  $  10.17
 ---------
-Please enter transfer ID to approve/reject (0 to cancel): "
+Please enter transfer ID to approve/reject (0 to cancel): 
 ```
 
 ### Use case 9: Approve or reject pending transfer
