@@ -53,6 +53,17 @@ namespace TenmoClient.Services
 
         // Add application-specific UI methods here...
 
+        public void DisplayUser(Account account)
+        {
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("User Details");
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine(" Id: " + account.UserId);
+            Console.WriteLine(" Account Id: " + account.AccountId);
+            Console.WriteLine(" Current Balance: " + account.Balance);
+           
+        }
+
 
     }
 }
