@@ -9,6 +9,8 @@ namespace TenmoClient.Services
         /************************************************************
             Print methods
         ************************************************************/
+
+       
         public void PrintLoginMenu()
         {
             Console.Clear();
@@ -64,6 +66,7 @@ namespace TenmoClient.Services
            
         }
 
+        
 
     }
 }

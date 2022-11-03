@@ -10,6 +10,7 @@ namespace TenmoClient
     {
         private readonly TenmoConsoleService console = new TenmoConsoleService();
         private readonly TenmoApiService tenmoApiService;
+        private readonly TenmoConsoleService tenmoConsole;
 
         public TenmoApp(string apiUrl)
         {
@@ -91,7 +92,8 @@ namespace TenmoClient
 
             if (menuSelection == 4)
             {
-                // Send TE bucks
+                SendMoney();
+                Console.Read();
             }
 
             if (menuSelection == 5)
@@ -180,12 +182,54 @@ namespace TenmoClient
 
             Console.WriteLine("Your current balance is: " + account.Balance.ToString("C"));
 
-            // Account account = tenmoApiService.GetAccount();
+
+        }
+
+        public void DisplayUsers()
+        {
+
+            List<User> users;
+            try
+            {
+
+                users = tenmoApiService.GetUsers();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return;
+            }
+
+            Console.WriteLine("The current users are: ");
+            foreach (User user in users)
+            {
+
+                Console.WriteLine(user.Username + " " + user.UserId);
+
+            }
+            Console.WriteLine();
+            Console.WriteLine();
+            //Console.WriteLine("Your current balance is: " + users.Balance.ToString("C"));
 
 
 
 
         }
+
+
+
+
+
+        public void SendMoney()
+        {
+            DisplayUsers();
+
+
+
+        }
+
+
 
     }
 }

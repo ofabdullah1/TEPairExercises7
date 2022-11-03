@@ -36,6 +36,27 @@ namespace TenmoClient.Services
 
         }
 
+        public List<User> GetUsers()
+        {
+            RestRequest request = new RestRequest($"{ApiUrl}tenmo_user");
+            IRestResponse<List<User>> response = client.Get<List<User>>(request);
+            if (response.ResponseStatus != ResponseStatus.Completed)
+            {
+                throw new Exception("Error occurred - unable to reach server.");
+            }
+            else if (!response.IsSuccessful)
+            {
+                throw new Exception("Error occurred - received non-success response: " + (int)response.StatusCode);
+            }
+            else
+            {
+                return response.Data;
+            }
+        }
+
+
+
+
 
         // Add methods to call api here...
 

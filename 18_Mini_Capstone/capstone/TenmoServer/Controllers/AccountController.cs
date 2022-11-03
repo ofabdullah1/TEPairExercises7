@@ -4,6 +4,7 @@ using TenmoServer.DAO;
 using TenmoServer.Models;
 using TenmoServer.Security;
 using TenmoClient.Models;
+using System.Collections.Generic;
 
 namespace TenmoServer.Controllers
 {
@@ -45,22 +46,10 @@ namespace TenmoServer.Controllers
             }
 
         }
-        //[HttpGet]
-        //public ActionResult<List<Account>> GetAllAccounts()
-        //{
 
 
-
-
-        //    return Response.data;
-        //}
-
-    //    [HttpGet]
-
-
-
-    //}
-}
+       
+    }
 
 
 
