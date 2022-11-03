@@ -44,7 +44,7 @@ namespace TenmoServer.Controllers
             }
 
         }
-        [HttpPut("{userId}")]
+        [HttpPost]
         public ActionResult TransferMoney(int userId, int amount)
         {
 

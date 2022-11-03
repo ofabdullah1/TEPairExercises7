@@ -46,14 +46,31 @@ namespace TenmoClient.Services
             }
             else if (!response.IsSuccessful)
             {
-                throw new Exception("Error, Throw error code like 404");
+                throw new Exception("Error occurred - received non-success response: " + (int)response.StatusCode);
             }
             else
             {
                 return response.Data;
             }
         }
-        // Add methods to call api here...
+
+        public Transfer MakeTransfer()
+        {
+            RestRequest request = new RestRequest($"{ApiUrl}account");
+            IRestResponse<Transfer> response = client.Get<Transfer>(request);
+            if (response.ResponseStatus != ResponseStatus.Completed)
+            {
+                throw new Exception("Error occurred-unable to reach server");
+            }
+            else if (!response.IsSuccessful)
+            {
+                throw new Exception("Error occurred - received non-success response: " + (int)response.StatusCode);
+            }
+            else
+            {
+                return response.Data;
+            }
+        }
 
 
     }

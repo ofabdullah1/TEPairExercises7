@@ -9,7 +9,7 @@ namespace TenmoServer.DAO
     public interface ITransferDao
     {
 
-       Transfer GetTransfer(int transferId);
+       Transfer GetTransfer(int accountFrom, int accountTo, decimal amount);
 
     }
 }
