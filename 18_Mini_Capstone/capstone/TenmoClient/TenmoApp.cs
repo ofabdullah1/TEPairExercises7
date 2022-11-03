@@ -75,7 +75,7 @@ namespace TenmoClient
             if (menuSelection == 1)
             {
                 ViewBalance();
-                Console.Read();
+                console.Pause();
 
             }
 
@@ -91,12 +91,18 @@ namespace TenmoClient
 
             if (menuSelection == 4)
             {
-                // Send TE bucks
+                DisplayUsers();
+                console.SelectReceiver();
+                int input = Convert.ToInt32(Console.ReadLine());
+                console.SelectAmount();
+                int amount = Convert.ToInt32(Console.ReadLine());
+                SendMoney(input,amount);
+                console.Pause();
             }
 
             if (menuSelection == 5)
             {
-                // Request TE bucks
+               // request money
             }
 
             if (menuSelection == 6)
@@ -180,12 +186,30 @@ namespace TenmoClient
 
             Console.WriteLine("Your current balance is: " + account.Balance.ToString("C"));
 
-            // Account account = tenmoApiService.GetAccount();
-
-
-
-
         }
-
+        public void DisplayUsers()
+        {
+            List<ApiUser> users;
+            try
+            {
+                users = tenmoApiService.GetUsers();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Console.WriteLine("The current users are: ");
+            foreach (ApiUser user in users)
+            {
+                Console.WriteLine(user.Username + " " + user.UserId);
+            }
+            Console.WriteLine();
+            Console.WriteLine();
+        }
+        public void SendMoney(int userId,int amount)
+        {
+           
+        }
     }
 }
