@@ -106,6 +106,42 @@ namespace TenmoServer.DAO
 
             return GetUser(username);
         }
+        public List<User> GetUsersExceptLogged(int userId)
+        {
+            List<User> returnUsers = new List<User>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("SELECT user_id, username, password_hash, salt FROM tenmo_user WHERE user_id != @user_id", conn);
+                    cmd.Parameters.AddWithValue("@user_id", userId);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        User u = GetUserFromReader(reader);
+                        returnUsers.Add(u);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+
+            return returnUsers;
+        }
+
+        public bool MakeTransfer(int senderId,int receiverId,int amount)
+        {
+            bool result = false;
+
+
+            return result;
+        }
 
         private User GetUserFromReader(SqlDataReader reader)
         {

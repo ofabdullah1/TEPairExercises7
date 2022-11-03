@@ -16,17 +16,15 @@ namespace TenmoServer.Controllers
         private readonly ITokenGenerator tokenGenerator;
         private readonly IUserDao userDao;
         private readonly IAccountDao accountDao;
-       
+
 
         public AccountController(ITokenGenerator _tokenGenerator, IPasswordHasher _passwordHasher, IUserDao _userDao, IAccountDao _accountDao)
         {
             tokenGenerator = _tokenGenerator;
             userDao = _userDao;
             accountDao = _accountDao;
-           
+
         }
-
-
 
         [HttpGet]
         public ActionResult<Account> GetAccount()
@@ -46,12 +44,25 @@ namespace TenmoServer.Controllers
             }
 
         }
+        [HttpPut("{userId}")]
+        public ActionResult TransferMoney(int userId, int amount)
+        {
+
+            string username = User.Identity.Name;
+            User user = userDao.GetUser(username);
+            if (userId == user.UserId)
+            {
+                return BadRequest(new { message = "You cannot send money to yourself." });
+            }
+            else
+            {
+                return Ok(userDao.MakeTransfer(user.UserId, userId, amount));
+            }
+
+        }
 
 
-       
+
+
     }
-
-
-
-
 }

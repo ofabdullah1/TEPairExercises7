@@ -65,8 +65,13 @@ namespace TenmoClient.Services
             Console.WriteLine(" Current Balance: " + account.Balance);
            
         }
-
-        
-
+        public void SelectReceiver()
+        {
+            Console.WriteLine("Select a user to send money to: ");
+        }
+        public void SelectAmount()
+        {
+            Console.WriteLine("Input amount to send: ");
+        }
     }
 }
