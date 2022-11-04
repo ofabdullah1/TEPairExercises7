@@ -97,7 +97,8 @@ namespace TenmoClient
                 int input = Convert.ToInt32(Console.ReadLine());
                 console.SelectAmount();
                 int amount = Convert.ToInt32(Console.ReadLine());
-                SendMoney(input,amount);
+                tenmoApiService.MakeTransfer(input, amount);
+                Console.WriteLine("Your transfer was successful! :)");
                 console.Pause();
             }
 
@@ -213,10 +214,9 @@ namespace TenmoClient
             Console.WriteLine();
         }
 
-        public void SendMoney(int userId, int amount)
+        public void SendMoney(int userId, decimal amount)
         {
-
-
+            
 
 
         }

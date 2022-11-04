@@ -135,13 +135,13 @@ namespace TenmoServer.DAO
             return returnUsers;
         }
 
-        public bool MakeTransfer(int senderId,int receiverId,int amount)
-        {
-            bool result = false;
+        //public bool MakeTransfer(int senderId,int receiverId,int amount)
+        //{
+        //    bool result = false;
 
 
-            return result;
-        }
+        //    return result;
+        //}
 
         private User GetUserFromReader(SqlDataReader reader)
         {

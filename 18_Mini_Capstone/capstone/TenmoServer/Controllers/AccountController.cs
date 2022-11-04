@@ -16,16 +16,34 @@ namespace TenmoServer.Controllers
         private readonly ITokenGenerator tokenGenerator;
         private readonly IUserDao userDao;
         private readonly IAccountDao accountDao;
+        private readonly ITransferDao transferDao;
 
 
-        public AccountController(ITokenGenerator _tokenGenerator, IPasswordHasher _passwordHasher, IUserDao _userDao, IAccountDao _accountDao)
+        public AccountController(ITokenGenerator _tokenGenerator, IPasswordHasher _passwordHasher, IUserDao _userDao, IAccountDao _accountDao, ITransferDao _transferDao)
         {
             tokenGenerator = _tokenGenerator;
             userDao = _userDao;
             accountDao = _accountDao;
-
+            transferDao = _transferDao;
         }
 
+        [HttpGet("{userId}")]
+        public ActionResult<Account> GetAccount(int userId)
+        {
+
+            
+            Account recipientAccount = accountDao.GetAccount(userId);
+
+            if (userId != 0)
+            {
+                return Ok(recipientAccount);
+            }
+            else
+            {
+                return NoContent();
+            }
+
+        }
         [HttpGet]
         public ActionResult<Account> GetAccount()
         {
@@ -44,19 +62,18 @@ namespace TenmoServer.Controllers
             }
 
         }
+
         [HttpPost]
-        public ActionResult TransferMoney(int userId, int amount)
+        public ActionResult TransferMoney(Transfer transfer)
         {
 
-            string username = User.Identity.Name;
-            User user = userDao.GetUser(username);
-            if (userId == user.UserId)
+            if (transfer.AccountFromId == transfer.AccountToId)
             {
                 return BadRequest(new { message = "You cannot send money to yourself." });
             }
             else
             {
-                return Ok(userDao.MakeTransfer(user.UserId, userId, amount));
+                return Ok(transferDao.MakeTransfer(transfer));
             }
 
         }

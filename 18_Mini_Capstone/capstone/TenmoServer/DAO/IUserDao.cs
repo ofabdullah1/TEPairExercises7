@@ -9,6 +9,6 @@ namespace TenmoServer.DAO
         User AddUser(string username, string password);
         List<User> GetUsers();
         List<User> GetUsersExceptLogged(int userId);
-        bool MakeTransfer(int senderId, int receiverId,int amount);
+       
     }
 }

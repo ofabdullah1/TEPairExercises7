@@ -19,7 +19,7 @@ namespace TenmoServer.DAO
         }
 
 
-        public Transfer MakeTransfer(int accountFrom, int accountTo, decimal amount)
+        public Transfer MakeTransfer(Transfer transfer)
         {
             Transfer returnTransfer = new Transfer();
 
@@ -31,9 +31,9 @@ namespace TenmoServer.DAO
 
                     SqlCommand cmd = new SqlCommand("BEGIN TRANSACTION; UPDATE account SET balance = balance - @amount WHERE account_id = @accountFrom; UPDATE account SET balance = balance + @amount WHERE account_id = @accountTo; " +
                                                     "INSERT INTO transfer (account_from,account_to,amount,transfer_status_id,transfer_type_id) VALUES (@accountFrom, @accountTo, @amount, 1, 1); COMMIT; ", conn);
-                    cmd.Parameters.AddWithValue("@accountFrom", accountFrom);
-                    cmd.Parameters.AddWithValue("@accountTo", accountTo);
-                    cmd.Parameters.AddWithValue("@amount", amount);
+                    cmd.Parameters.AddWithValue("@accountFrom", transfer.AccountFromId);
+                    cmd.Parameters.AddWithValue("@accountTo", transfer.AccountToId);
+                    cmd.Parameters.AddWithValue("@amount", transfer.Amount);
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     if (reader.Read())
