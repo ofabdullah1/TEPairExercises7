@@ -10,6 +10,7 @@ namespace TenmoClient
     {
         private readonly TenmoConsoleService console = new TenmoConsoleService();
         private readonly TenmoApiService tenmoApiService;
+        private readonly TenmoConsoleService tenmoConsole;
 
         public TenmoApp(string apiUrl)
         {
@@ -81,7 +82,8 @@ namespace TenmoClient
 
             if (menuSelection == 2)
             {
-                // View your past transfers
+                tenmoApiService.GetTransfers();
+                console.Pause();
             }
 
             if (menuSelection == 3)
@@ -96,13 +98,24 @@ namespace TenmoClient
                 int input = Convert.ToInt32(Console.ReadLine());
                 console.SelectAmount();
                 int amount = Convert.ToInt32(Console.ReadLine());
-                SendMoney(input,amount);
-                console.Pause();
+
+                Account account = tenmoApiService.GetAccount();
+                if (account.Balance > amount && amount != 0 && amount >0)
+                {
+                    tenmoApiService.MakeTransfer(input, amount);
+                    Console.WriteLine("Your transfer was successful! :)");
+                    console.Pause();
+                }
+                else
+                {
+                    Console.WriteLine("Error, cannot send more money than you have!");
+                    console.Pause();
+                }
             }
 
             if (menuSelection == 5)
             {
-               // request money
+                // request money
             }
 
             if (menuSelection == 6)
@@ -186,7 +199,11 @@ namespace TenmoClient
 
             Console.WriteLine("Your current balance is: " + account.Balance.ToString("C"));
 
+            // Account account = tenmoApiService.GetAccount();
+
+
         }
+
         public void DisplayUsers()
         {
             List<ApiUser> users;
@@ -207,9 +224,25 @@ namespace TenmoClient
             Console.WriteLine();
             Console.WriteLine();
         }
-        public void SendMoney(int userId,int amount)
+        public void DisplayTransfers()
         {
-           
+            List<ReturnTransfer> transfers;
+            try
+            {
+                transfers = tenmoApiService.GetTransfers();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return;
+            }
+            Console.WriteLine("All transfers: ");
+            foreach (ReturnTransfer transfer in transfers)
+            {
+                Console.WriteLine(transfer.TransferId + " " + transfer.UserFrom + " " + transfer.UserTo + " " + transfer.Amount);
+            }
+            Console.WriteLine();
+            Console.WriteLine();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace TenmoClient.Services
     public class TenmoApiService : AuthenticatedApiService
     {
         public readonly string ApiUrl;
-       
+
 
         public TenmoApiService(string apiUrl) : base(apiUrl)
         {
@@ -20,7 +20,7 @@ namespace TenmoClient.Services
         {
             RestRequest request = new RestRequest($"{ApiUrl}account");
             IRestResponse<Account> response = client.Get<Account>(request);
-           
+
             if (response.ResponseStatus != ResponseStatus.Completed)
             {
                 throw new Exception("Error occurred - unable to reach server.");
@@ -36,6 +36,28 @@ namespace TenmoClient.Services
 
         }
 
+        public Account GetRecepientAccount(int userId)
+        {
+            RestRequest request = new RestRequest($"{ApiUrl}account/{userId}");
+            IRestResponse<Account> response = client.Get<Account>(request);
+
+            if (response.ResponseStatus != ResponseStatus.Completed)
+            {
+                throw new Exception("Error occurred - unable to reach server.");
+            }
+            else if (!response.IsSuccessful)
+            {
+                throw new Exception("Error occurred - received non-success response: " + (int)response.StatusCode);
+            }
+            else
+            {
+                return response.Data;
+            }
+
+        }
+
+
+
         public List<ApiUser> GetUsers()
         {
             RestRequest request = new RestRequest($"{ApiUrl}user");
@@ -46,15 +68,56 @@ namespace TenmoClient.Services
             }
             else if (!response.IsSuccessful)
             {
-                throw new Exception("Error, Throw error code like 404");
+                throw new Exception("Error occurred - received non-success response: " + (int)response.StatusCode);
             }
             else
             {
                 return response.Data;
             }
         }
-        // Add methods to call api here...
 
+        public Transfer MakeTransfer(int userId, decimal amount)
+        {
+            int fromId = GetAccount().AccountId;
+            Account account = GetAccount();
+                int toId = GetRecepientAccount(userId).AccountId;
+                Transfer transferringTo = new Transfer { AccountFromId = fromId, AccountToId = toId, Amount = amount };
+                RestRequest request = new RestRequest($"{ApiUrl}account");
+                request.AddJsonBody(transferringTo);
+                IRestResponse<Transfer> response = client.Post<Transfer>(request);
+                if (response.ResponseStatus != ResponseStatus.Completed)
+                {
+                    throw new Exception("Error occurred-unable to reach server");
+                }
+                else if (!response.IsSuccessful)
+                {
+                    throw new Exception("Error occurred - received non-success response: " + (int)response.StatusCode);
+                }
+                else
+                {
+                    return response.Data;
+                }
+          
+        }
+        public List<ReturnTransfer> GetTransfers()
+        {
+            //int accountId = GetAccount().AccountId;
+            RestRequest request = new RestRequest($"{ApiUrl}account/transfer");
+            IRestResponse<List<ReturnTransfer>> response = client.Get<List<ReturnTransfer>>(request);
 
+            if (response.ResponseStatus != ResponseStatus.Completed)
+            {
+                throw new Exception("Error occurred - unable to reach server.");
+            }
+            else if (!response.IsSuccessful)
+            {
+                throw new Exception("Error occurred - received non-success response: " + (int)response.StatusCode);
+            }
+            else
+            {
+                return response.Data;
+            }
+
+        }
     }
 }

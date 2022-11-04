@@ -65,6 +65,7 @@ INSERT INTO transfer_status (transfer_status_desc) VALUES ('Rejected');
 
 INSERT INTO transfer_type (transfer_type_desc) VALUES ('Request');
 INSERT INTO transfer_type (transfer_type_desc) VALUES ('Send');
+<<<<<<< HEAD
 SELECT * FROM tenmo_user WHERE user_id != 1001;
 
 SELECT * FROM transfer
@@ -75,3 +76,7 @@ UPDATE account SET balance = balance - 50 WHERE account_id = 2001;
 INSERT INTO transfer (account_from,account_to,amount,transfer_status_id,transfer_type_id)
 VALUES (2001,2002,50,1,1);
 COMMIT;
+=======
+
+SELECT * FROM account;
+>>>>>>> da2a333b4ed4ad88ff5840a5bba70b8ad0108bf5
