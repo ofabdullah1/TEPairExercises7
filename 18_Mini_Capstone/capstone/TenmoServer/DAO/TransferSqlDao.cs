@@ -79,7 +79,7 @@ namespace TenmoServer.DAO
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception)
             {
                 transfers = new List<ReturnTransfer>();
             }

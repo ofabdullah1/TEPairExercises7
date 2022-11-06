@@ -82,7 +82,7 @@ namespace TenmoClient
 
             if (menuSelection == 2)
             {
-                tenmoApiService.GetTransfers();
+                DisplayTransfers();
                 console.Pause();
             }
 
@@ -239,7 +239,7 @@ namespace TenmoClient
             Console.WriteLine("All transfers: ");
             foreach (ReturnTransfer transfer in transfers)
             {
-                Console.WriteLine(transfer.TransferId + " " + transfer.UserFrom + " " + transfer.UserTo + " " + transfer.Amount);
+                Console.WriteLine("Transfer ID: " + transfer.TransferId + " " + "|" + "Transfer From: " +  transfer.UserFrom + " " + "|" + "Transfer To: " + transfer.UserTo + " " + "|" + "Transfer Amount: " + transfer.Amount);
             }
             Console.WriteLine();
             Console.WriteLine();
