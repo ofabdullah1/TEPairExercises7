@@ -1,0 +1,1 @@
+ Backend application using C#, SQL, ASP.NET, ADO.NET, and a custom-made RESTful API. This is a user-authenticated money transfer application that uses RestSharp to access a custom-made API using REST principles. Tracks and records all transactions in a SQL database. Requests made are secured by JWT authorization and authentication. (Venmo Clone).
